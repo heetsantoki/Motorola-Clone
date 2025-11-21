@@ -8,11 +8,16 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3200;
 
-// Middleware
-app.use(cors());
+// CORS FIX
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
 app.use(express.json());
 
-// Connect to MongoDB
+// MongoDB Connect
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB connected"))
   .catch(err => console.error("❌ MongoDB error:", err));
@@ -22,5 +27,5 @@ app.use('/api/auth', authRoutes);
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`🚀 Server running at http://localhost:${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
