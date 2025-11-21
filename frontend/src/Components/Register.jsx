@@ -35,7 +35,7 @@ const Register = () => {
     const { confirmPassword, ...dataToSend } = formData;
 
     try {
-      const res = await axios.post('http://localhost:3200/api/auth/register', dataToSend);
+      const res = await axios.post('https://motorola-clone-production.up.railway.app/api/auth/register', dataToSend);
       alert(res.data.message); // Show success message
 
       navigate("/login");
