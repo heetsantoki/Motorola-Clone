@@ -8,12 +8,15 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3200;
 
-// CORS FIX
+// CORS FIX (VERY IMPORTANT)
 app.use(cors({
-  origin: "*",
+  origin: ["https://moto-app-jet.vercel.app", "http://localhost:5173"],
   methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  credentials: true,
 }));
+
+// For preflight OPTIONS requests
+app.options("*", cors());
 
 app.use(express.json());
 
@@ -23,7 +26,12 @@ mongoose.connect(process.env.MONGO_URI)
   .catch(err => console.error("❌ MongoDB error:", err));
 
 // Routes
-app.use('/api/auth', authRoutes);
+app.use("/api/auth", authRoutes);
+
+// Health Check Route (Test)
+app.get("/", (req, res) => {
+  res.json({ message: "Backend Working!" });
+});
 
 // Start server
 app.listen(PORT, () => {
