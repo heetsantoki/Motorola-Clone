@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/Login.css";
 
 const Login = () => {
 
-  const API_URL = "https://motorola-clone-production.up.railway.app";
+  // Use Vite env var when provided, fallback to deployed API URL
+  const API_URL = import.meta.env.VITE_API_URL || "https://motorola-clone-production.up.railway.app";
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -36,9 +37,9 @@ const Login = () => {
 
       alert("Login successful!");
       localStorage.setItem("isLoggedIn", "true");
+
       navigate("/");
-    } 
-    catch (err) {
+    } catch (err) {
       console.error("Login error:", err);
       setError("Something went wrong. Try again later.");
     }
@@ -53,13 +54,21 @@ const Login = () => {
           {error && <div className="error-msg">{error}</div>}
 
           <div className="input-box">
-            <input type="text" placeholder="Username"
-              value={username} onChange={(e) => setUsername(e.target.value)} />
+            <input
+              type="text"
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
           </div>
 
           <div className="input-box">
-            <input type="password" placeholder="Password"
-              value={password} onChange={(e) => setPassword(e.target.value)} />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
 
           <button type="submit" className="btn">Login</button>

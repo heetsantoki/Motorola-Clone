@@ -5,7 +5,8 @@ import '../styles/Register.css';
 
 const Register = () => {
 
-  const API_URL = "https://motorola-clone-production.up.railway.app";
+  // Use Vite env var when provided, fallback to deployed API URL
+  const API_URL = import.meta.env.VITE_API_URL || "https://motorola-clone-production.up.railway.app";
 
   const [formData, setFormData] = useState({
     username: '',
